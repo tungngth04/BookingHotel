@@ -1,24 +1,41 @@
-.content-home-admin {
+.home-admin {
   display: flex;
   flex-direction: column;
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    & > button {
-      width: 100px;
-    }
-  }
+  width: 100%;
 
-  .btn-home-admin {
-    display: flex;
-    gap: 20px;
-    & > button {
-      width: 100px;
+  .box-content {
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    .content-home-admin {
+      display: flex;
+      flex-direction: column;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .search-bar {
+          display: flex;
+          gap: 20px;
+          & > button {
+            width: 100px;
+            background-color: #5793b6;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+          }
+        }
+      }
+
+      // .table {
+      //   .table-content {
+      //     max-width: 100%;
+      //     overflow-x: auto;
+      //   }
+      // }
     }
   }
 }
-
 .ant-space-item:hover {
-  color: #80e5f2;
+  color: #5793b6;
 }

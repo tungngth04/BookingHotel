@@ -2,9 +2,9 @@ import { useState } from 'react'
 import './AdminLayout.scss'
 import { Button, Flex, Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
-import SideBarAdmin from '../components/SideBarAdmin/SideBarAdmin'
-import HeaderAdmin from '../common/HeaderAdmin/HeaderAdmin'
-import SideAdmin from '../components/SideAdmin/SideAdmin'
+import SideBarAdmin from '../../components/SideBarAdmin/SideBarAdmin'
+import HeaderAdmin from '../../common/HeaderAdmin/HeaderAdmin'
+// import SideAdmin from '../../components/SideAdmin/SideAdmin'
 import { Outlet } from 'react-router-dom'
 const { Header, Sider, Content } = Layout
 const AdminLayout = () => {
@@ -29,7 +29,7 @@ const AdminLayout = () => {
           <Content className='content'>
             <Flex gap='large'>
               <Outlet />
-              <SideAdmin />
+              {/* <SideAdmin /> */}
             </Flex>
           </Content>
         </Layout>

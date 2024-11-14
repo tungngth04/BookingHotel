@@ -1,0 +1,32 @@
+.content-home-admin {
+  display: flex;
+  flex-direction: column;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .search-bar {
+      display: flex;
+      gap: 20px;
+      & > button {
+        width: 100px;
+        background-color: #5793b6;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .btn-home-admin {
+    display: flex;
+    gap: 20px;
+    & > button {
+      width: 100px;
+    }
+  }
+}
+
+.ant-space-item:hover {
+  color: #80e5f2;
+}

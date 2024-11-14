@@ -1,34 +1,45 @@
 import './HomeAdmin.scss'
-import { MdCheckroom, MdOutlineAnalytics, MdOutlineBedroomParent } from 'react-icons/md'
-import { FaUser } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import {
+  BookOutlined,
+  HomeOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  SolutionOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 const RoomAdmin = () => {
   const navigate = useNavigate()
   const manager = [
     {
       title: 'Quản lý phòng',
-      icon: <MdOutlineBedroomParent />,
+      icon: <HomeOutlined />,
       path: '/admin/rooms',
     },
     {
       title: 'Quản lý khách hàng',
-      icon: <FaUser />,
-      path: '/admin/customers',
+      icon: <UserOutlined />,
+      path: '/admin/users',
     },
     {
-      title: 'Quản lý thống kê',
-      icon: <MdOutlineAnalytics />,
-      path: '/admin/statistics',
-    },
-    {
-      title: 'Quản lý đặt phòng',
-      icon: <MdCheckroom />,
-      path: '/admin/bookings',
+      title: 'Quản lý sale',
+      icon: <ShoppingCartOutlined />,
+      path: '/admin/sales',
     },
     {
       title: 'Quản lý đặt phòng',
-      icon: <MdCheckroom />,
+      icon: <BookOutlined />,
       path: '/admin/bookings',
+    },
+    {
+      title: 'Quản lý dịch vụ',
+      icon: <SolutionOutlined />,
+      path: '/admin/services',
+    },
+    {
+      title: 'Quản lý sản phẩm',
+      icon: <ShoppingOutlined />,
+      path: '/admin/products',
     },
   ]
   const handleClick = (value) => {
