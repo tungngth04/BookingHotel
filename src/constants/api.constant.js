@@ -1,5 +1,3 @@
-import { statistic } from 'antd/es/theme/internal'
-
 export const ApiConstant = {
   auth: {
     login: 'auth/login',
@@ -8,7 +6,7 @@ export const ApiConstant = {
   rooms: {
     getAllRoom: '/room',
     createRoom: '/room/create',
-    editRoom: '/room/update/',
+    updateRoom: '/room/update/',
     deleteRoom: '/room/delete/',
   },
   users: {
@@ -16,6 +14,7 @@ export const ApiConstant = {
     deleteUser: '/user/delete/',
     editUser: '/user/update/',
     getUserById: '/user/',
+    lockById: '/user/lock-unlock/',
   },
   bookings: {
     getAllBooking: '/booking/admin',

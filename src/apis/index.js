@@ -51,4 +51,29 @@ apiDefault.interceptors.request.use(
   },
 )
 
-export { apiDefault, api }
+const apiDefaultUpload = axios.create({
+  baseURL: `${import.meta.env.VITE_API_SERVER}`,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'ngrok-skip-browser-warning': '69420',
+  },
+})
+apiDefaultUpload.interceptors.request.use((config) => {
+  const accessToken = JSON.parse(localStorage.getItem(LocalStorage.auth))?.token
+  config.headers.Authorization = `Bearer  ${accessToken}`
+  return config
+}, Promise.reject)
+
+apiDefaultUpload.interceptors.response.use(
+  (response) => response.data,
+  async (error) => {
+    if (error.code === 401) {
+      const navigate = useNavigate()
+      toast.error('Phiên đăng nhập đã hết hạn')
+      navigate('/login')
+      localStorage.removeItem(LocalStorage.auth)
+    }
+    return Promise.reject(error)
+  },
+)
+export { apiDefault, api, apiDefaultUpload }

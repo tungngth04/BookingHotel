@@ -1,0 +1,45 @@
+.create-user-modal {
+  width: 800px !important;
+  .ant-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+    row-gap: 16px;
+  }
+
+  .left-column {
+    grid-column: 1 / 2;
+    .input {
+      width: 260px !important;
+    }
+  }
+
+  .right-column {
+    grid-column: 2 / 3;
+    .input {
+      width: 260px !important;
+    }
+  }
+
+  .form-action {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ant-form-item-control {
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+    .ant-form-item-explain {
+      display: flex;
+      width: 260px;
+    }
+  }
+}

@@ -9,7 +9,8 @@
       width: 100%;
       height: 80px;
       object-fit: cover;
-      border-radius: 50%;
+      border-radius: 9999px;
+      aspect-ratio: 1 / 1;
     }
   }
 }
