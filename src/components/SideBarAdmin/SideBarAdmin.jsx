@@ -2,10 +2,14 @@ import { Flex, Menu } from 'antd'
 import logo from '../../assets/images/logo-hotel.png'
 import './SideBarAdmin.scss'
 import {
-  CarryOutFilled,
+  BookOutlined,
+  DashboardOutlined,
+  HomeOutlined,
   LogoutOutlined,
-  OrderedListOutlined,
   ProfileOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  SolutionOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
@@ -28,16 +32,27 @@ const SideBarAdmin = () => {
       icon: <UserOutlined />,
       label: 'Quản lý',
       children: [
-        { key: '1-1', label: 'Quản lý Phòng', path: '/admin/rooms' },
-        { key: '1-2', label: 'Quản lý khách hàng', path: '/admin/customers' },
-        { key: '1-3', label: 'Quản lý thống kê', path: '/admin/statistics' },
-        { key: '1-4', label: 'Quản lý đặt phòng', path: '/admin/bookings' },
+        { key: '1-1', icon: <HomeOutlined />, label: 'Quản lý Phòng', path: '/admin/rooms' },
+        { key: '1-2', icon: <UserOutlined />, label: 'Quản lý khách hàng', path: '/admin/users' },
+        { key: '1-3', icon: <ShoppingCartOutlined />, label: 'Quản lý sale', path: '/admin/sales' },
+        { key: '1-4', icon: <BookOutlined />, label: 'Quản lý đặt phòng', path: '/admin/bookings' },
+        {
+          key: '1-5',
+          icon: <SolutionOutlined />,
+          label: 'Quản lý dịch vụ',
+          path: '/admin/services',
+        },
+        {
+          key: '1-6',
+          icon: <ShoppingOutlined />,
+          label: 'Quản lý sản phẩm',
+          path: '/admin/products',
+        },
       ],
     },
-    { key: '2', icon: <CarryOutFilled />, label: 'Yêu cầu', path: '/admin/requests' },
-    { key: '3', icon: <OrderedListOutlined />, label: 'Việc làm', path: '/admin/jobs' },
-    { key: '4', icon: <ProfileOutlined />, label: 'Thông tin cá nhân', path: '/admin/profile' },
-    { key: '5', icon: <LogoutOutlined />, label: 'Đăng xuất', path: '/logout' },
+    { key: '2', icon: <DashboardOutlined />, label: 'Thống kê', path: '/admin/requests' },
+    { key: '3', icon: <ProfileOutlined />, label: 'Thông tin cá nhân', path: '/admin/statistic' },
+    { key: '4', icon: <LogoutOutlined />, label: 'Đăng xuất', path: '/logout' },
   ]
 
   const findMenuItemByKey = (items, key) => {
