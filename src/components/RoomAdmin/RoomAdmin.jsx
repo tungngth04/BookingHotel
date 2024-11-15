@@ -1,28 +1,40 @@
-import { Button, Input, message, Modal, Space, Table } from 'antd'
+import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
 import './RoomAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { deleteRoom, getAllRoom } from '../../apis/room.api'
+import CreateRoomModal from '../CreateRoomModal/CreateRoomModal'
 const RoomAdmin = () => {
+  const CURRENT_DEFAULT = 1
+  const PAGE_SIZE_DEFAULT = 10
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-
+  const [totalItems, setTotalItems] = useState(0)
+  const [pagination, setPagination] = useState({
+    current: CURRENT_DEFAULT,
+    size: PAGE_SIZE_DEFAULT,
+  })
+  const [isOpenModel, setIsOpenModel] = useState(false)
+  const [isUpdate, setIsUpdate] = useState(false)
+  const [currentRoom, setCurrentRoom] = useState(null)
+  console.log('ádasfadfa', currentRoom)
   const fetchRooms = async () => {
     setLoading(true)
     try {
-      const response = await getAllRoom({ deleteFlag: false })
+      const response = await getAllRoom({
+        deleteFlag: false,
+        pageNum: pagination.current,
+        pageSize: pagination.size,
+      })
       setData(response.data.data.items)
-      console.log('first, ', response.data.data.items)
+      setTotalItems(response.data.data.meta.totalElements)
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
       setLoading(false)
     }
   }
-  useEffect(() => {
-    fetchRooms()
-  }, [])
 
   const columns = [
     {
@@ -81,12 +93,15 @@ const RoomAdmin = () => {
       key: 'action',
       width: '100px',
       fixed: 'right',
-      render: (_, __, index) => (
+      render: (record) => (
         <Space size='middle'>
-          <EditOutlined style={{ fontSize: '20px', cursor: 'pointer' }} />
+          <EditOutlined
+            style={{ fontSize: '20px', cursor: 'pointer' }}
+            onClick={() => handleUpdate(record)}
+          />
           <DeleteOutlined
             style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }}
-            onClick={() => handleDelete(index)} // Truyền `index` vào handleDelete
+            onClick={() => handleDelete(record.id)}
           />
         </Space>
       ),
@@ -98,7 +113,6 @@ const RoomAdmin = () => {
     return { y: `${height}px` }
   }
   const handleDelete = async (roomId) => {
-    // roomId là số thứ tự trong mảng (index)
     Modal.confirm({
       title: 'Xác nhận xóa',
       content: 'Bạn có chắc chắn muốn xóa phòng này?',
@@ -107,11 +121,8 @@ const RoomAdmin = () => {
       cancelText: 'Hủy',
       onOk: async () => {
         try {
-          // Gọi API xóa phòng, roomId là index trong mảng
-          await deleteRoom(roomId) // Gọi API xóa phòng theo `roomId` (index)
+          await deleteRoom(roomId)
           message.success('Xóa phòng thành công')
-
-          // Cập nhật lại state bằng cách loại bỏ phần tử tại roomId (index)
           setData((prevData) => prevData.filter((_, i) => i !== roomId))
         } catch (error) {
           console.error('Error deleting room:', error)
@@ -120,7 +131,26 @@ const RoomAdmin = () => {
       },
     })
   }
+  const handleChange = (page, pageSize) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: page,
+      size: pageSize || prev.size,
+    }))
+  }
 
+  useEffect(() => {
+    fetchRooms()
+  }, [pagination])
+
+  const handleCancel = () => {
+    setIsOpenModel(false)
+  }
+  const handleUpdate = (data) => {
+    setIsOpenModel(true)
+    setIsUpdate(true)
+    setCurrentRoom(data)
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -134,9 +164,19 @@ const RoomAdmin = () => {
                   placeholder='Tìm kiếm thành viên'
                   allowClear
                 />
-                <Button>
+                <Button
+                  onClick={() => {
+                    setIsOpenModel(true), setIsUpdate(false)
+                  }}>
                   <PlusCircleOutlined /> Thêm
                 </Button>
+                <CreateRoomModal
+                  onCancel={handleCancel}
+                  visible={isOpenModel}
+                  onRoomCreated={fetchRooms}
+                  isUpdate={isUpdate}
+                  currentRoom={currentRoom}
+                />
               </div>
             </div>
             <div className='table'>
@@ -145,8 +185,24 @@ const RoomAdmin = () => {
                 columns={columns}
                 dataSource={data}
                 loading={loading}
-                pagination={{ locale: { items_per_page: '/ Trang' } }}
                 scroll={calculateBodyTableHeight()}
+                pagination={false}
+              />
+              <Pagination
+                current={pagination.current}
+                pageSize={pagination.size}
+                showSizeChanger
+                onChange={handleChange}
+                onShowSizeChange={handleChange}
+                total={totalItems}
+                style={{
+                  backgroundColor: '#fff',
+                  padding: '10px',
+                  paddingRight: '10px 20px 15px 10px',
+                  justifyContent: 'flex-end',
+                  borderRadius: '0 0 20px 20px ',
+                }}
+                locale={{ items_per_page: '/ Trang' }}
               />
             </div>
           </div>

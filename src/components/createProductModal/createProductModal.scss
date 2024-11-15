@@ -1,0 +1,28 @@
+.create-product-modal {
+  .left-column {
+    .input {
+      width: 360px !important;
+    }
+  }
+
+  .form-action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ant-form-item-control {
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+    .ant-form-item-explain {
+      display: flex;
+      width: 260px;
+    }
+  }
+}
