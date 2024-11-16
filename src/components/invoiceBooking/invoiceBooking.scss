@@ -1,0 +1,73 @@
+.invoice-modal {
+  .invoice-content {
+    padding: 20px;
+
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .invoice-section {
+      margin: 20px 0;
+
+      .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+          background-color: #f8f8f8;
+          text-align: left;
+          padding: 10px;
+          font-weight: bold;
+          font-size: 14px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        td {
+          padding: 10px;
+          font-size: 14px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+
+        tr:hover {
+          background-color: #f1f1f1;
+        }
+      }
+    }
+
+    .invoice-total {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      p {
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 0;
+
+        &.subtotal,
+        &.surcharges {
+          font-size: 14px;
+          color: #555;
+        }
+
+        strong {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .invoice-btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
