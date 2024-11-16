@@ -38,6 +38,7 @@ const CreateProductModal = ({ visible, onCancel, onProductCreated, isUpdate, cur
       [field]: value,
     }))
   }
+
   const hanldeSubmit = async () => {
     if (!formData.name || !formData.serviceId || !formData.description) {
       message.error('Vui lòng nhập đầy đủ thông tin bắt buộc!')

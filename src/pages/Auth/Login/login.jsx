@@ -43,10 +43,10 @@ const Login = () => {
                     })
                     const authorities = roles.map((role) => role.authority)
                     if (authorities.includes('ROLE_ADMIN')) {
-                      navigate('/')
+                      navigate('/admin')
                       toast.success('Đăng nhập thành công với vai trò Quản trị viên!')
                     } else if (authorities.includes('ROLE_USER')) {
-                      navigate('/admin')
+                      navigate('/')
                       toast.success('Đăng nhập thành công với vai trò Người dùng!')
                     }
                   } else {

@@ -27,9 +27,11 @@ const InvoiceBooking = ({ visible, onCancel, currentBooking }) => {
       onCancel={onCancel}
       footer={null}>
       <div className='invoice-content'>
-        <p>Họ tên: {data?.lastName + ' ' + data?.firstName}</p>
-        <p>Số điện thoại: {data?.phoneNumber}</p>
-        <p>Email: {data?.email}</p>
+        <div className='user-info'>
+          <p>Họ tên: {data?.lastName + ' ' + data?.firstName}</p>
+          <p>Số điện thoại: {data?.phoneNumber}</p>
+          <p>Email: {data?.email}</p>
+        </div>
         <div className='invoice-section'>
           <table className='invoice-table'>
             <tr>

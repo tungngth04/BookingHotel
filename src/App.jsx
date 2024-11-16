@@ -1,4 +1,4 @@
-import { useRoutes } from 'react-router-dom'
+import { Navigate, useRoutes } from 'react-router-dom'
 import './App.scss'
 import AdminLayout from './layouts/AdminLayout/AdminLayout'
 import RoomAdmin from './components/RoomAdmin/RoomAdmin'
@@ -14,6 +14,10 @@ function App() {
   const router = useRoutes([
     {
       path: '/',
+      element: <Navigate to='/login' />,
+    },
+    {
+      path: '/admin',
       element: <AdminLayout />,
       children: [
         {
