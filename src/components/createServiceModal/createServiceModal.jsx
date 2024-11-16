@@ -53,10 +53,10 @@ const CreateServiceModal = ({ visible, onCancel, onServiceCreated, isUpdate, cur
         message.success('Tạo dịch vụ mới thành công!')
       }
       setFormData({
-        name: '',
+        title: '',
         thumbnailFile: [],
+        price: null,
         description: '',
-        serviceId: null,
       })
       onCancel()
       onServiceCreated()
