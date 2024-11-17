@@ -12,7 +12,6 @@ const CreateSaleModal = ({ visible, onCancel, onSaleCreated, isUpdate, currentSa
     dayEnd: '',
     salePercent: null,
   })
-  console.log('ádasdasd', formData.thumbnailFile)
   useEffect(() => {
     if (isUpdate && currentSale) {
       setFormData({

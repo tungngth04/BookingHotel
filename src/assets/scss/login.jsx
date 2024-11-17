@@ -6,7 +6,6 @@ import slider3 from '../../../assets/images/hero-3.jpg'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 const Login = () => {
-  console.log('Login component rendered')
   return (
     <>
       <Swiper

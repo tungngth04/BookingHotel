@@ -15,6 +15,7 @@ export const ApiConstant = {
     editUser: '/user/update/',
     getUserById: '/user/',
     lockById: '/user/lock-unlock/',
+    currentUser: '/user/current',
   },
   bookings: {
     getAllBooking: '/booking/admin',

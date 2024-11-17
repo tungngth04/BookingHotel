@@ -13,7 +13,6 @@ const CreateServiceModal = ({ visible, onCancel, onServiceCreated, isUpdate, cur
     price: null,
     description: '',
   })
-  console.log('ádasdasd', formData.thumbnailFile)
   useEffect(() => {
     if (isUpdate && currentService) {
       setFormData({
@@ -103,7 +102,6 @@ const CreateServiceModal = ({ visible, onCancel, onServiceCreated, isUpdate, cur
               maxCount={1}
               accept='image/png, image/jpeg'
               fileList={formData.thumbnailFile}
-              //   onChange={handleFileChange}
               beforeUpload={(file) => {
                 setFormData((prev) => ({
                   ...prev,

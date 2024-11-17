@@ -9,6 +9,9 @@ import ServiceAdmin from './components/ServiceAdmin/ServiceAdmin'
 import SaleAdmin from './components/SaleAdmin/SaleAdmin'
 import ProductAdmin from './components/ProductAdmin/ProductAdmin'
 import UserAdmin from './components/UserAdmin/UserAdmin'
+import StatisticAdmin from './components/statisticAdmin/statisticAdmin'
+import StatisticRoomBookMonth from './components/statisticRoomBookMonth/statisticRoomBookMonth'
+import StatisticBookingStatus from './components/statisticBookingStatus/statisticBookingStatus'
 // import UserLayout from './layouts/UserLayout/UserLayout'
 function App() {
   const router = useRoutes([
@@ -48,8 +51,21 @@ function App() {
           path: '/admin/users',
           element: <UserAdmin />,
         },
+        {
+          path: '/admin/statistic/revenue',
+          element: <StatisticAdmin />,
+        },
+        {
+          path: '/admin/statistic/room-book-month',
+          element: <StatisticRoomBookMonth />,
+        },
+        {
+          path: '/admin/statistic/booking-status',
+          element: <StatisticBookingStatus />,
+        },
       ],
     },
+
     // {
     //   path: '/',
     //   element: <UserLayout />,

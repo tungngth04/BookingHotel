@@ -55,14 +55,18 @@ const SideBarAdmin = () => {
       key: '2',
       icon: <DashboardOutlined />,
       label: 'Thống kê',
-      path: '/admin/requests',
       className: 'li-menu',
+      children: [
+        { key: '2-1', label: 'Phòng đặt trong tháng', path: '/admin/statistic/room-book-month' },
+        { key: '2-2', label: 'Doanh thu', path: '/admin/statistic/revenue' },
+        { key: '2-3', label: 'Trạng thái đặt phòng', path: '/admin/statistic/booking-status' },
+      ],
     },
     {
       key: '3',
       icon: <ProfileOutlined />,
       label: 'Thông tin cá nhân',
-      path: '/admin/statistic',
+      path: '/admin/profile',
       className: 'li-menu',
     },
     {
