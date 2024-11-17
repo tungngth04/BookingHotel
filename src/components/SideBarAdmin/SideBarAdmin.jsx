@@ -31,6 +31,7 @@ const SideBarAdmin = () => {
       key: '1',
       icon: <UserOutlined />,
       label: 'Quản lý',
+      className: 'li-menu',
       children: [
         { key: '1-1', icon: <HomeOutlined />, label: 'Quản lý Phòng', path: '/admin/rooms' },
         { key: '1-2', icon: <UserOutlined />, label: 'Quản lý khách hàng', path: '/admin/users' },
@@ -50,9 +51,27 @@ const SideBarAdmin = () => {
         },
       ],
     },
-    { key: '2', icon: <DashboardOutlined />, label: 'Thống kê', path: '/admin/requests' },
-    { key: '3', icon: <ProfileOutlined />, label: 'Thông tin cá nhân', path: '/admin/statistic' },
-    { key: '4', icon: <LogoutOutlined />, label: 'Đăng xuất', path: '/logout' },
+    {
+      key: '2',
+      icon: <DashboardOutlined />,
+      label: 'Thống kê',
+      path: '/admin/requests',
+      className: 'li-menu',
+    },
+    {
+      key: '3',
+      icon: <ProfileOutlined />,
+      label: 'Thông tin cá nhân',
+      path: '/admin/statistic',
+      className: 'li-menu',
+    },
+    {
+      key: '4',
+      icon: <LogoutOutlined />,
+      label: 'Đăng xuất',
+      path: '/logout',
+      className: 'li-menu',
+    },
   ]
 
   const findMenuItemByKey = (items, key) => {
