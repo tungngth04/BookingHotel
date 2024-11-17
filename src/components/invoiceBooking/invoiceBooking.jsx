@@ -5,7 +5,6 @@ import { getBookingById } from '../../apis/booking.api'
 import './invoiceBooking.scss'
 const InvoiceBooking = ({ visible, onCancel, currentBooking }) => {
   const [data, setData] = useState([])
-  console.log('currentBooking', currentBooking)
   const fetchUserBookings = async () => {
     try {
       const response = await getBookingById(currentBooking?.id)

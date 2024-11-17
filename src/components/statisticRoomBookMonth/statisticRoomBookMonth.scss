@@ -1,0 +1,11 @@
+.name-bar {
+  text-align: center;
+  & > h2 {
+    margin: 0px !important;
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+}

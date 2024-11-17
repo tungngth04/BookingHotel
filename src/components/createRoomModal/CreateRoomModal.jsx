@@ -204,7 +204,6 @@ const CreateRoomModal = ({ visible, onCancel, onRoomCreated, isUpdate, currentRo
               maxCount={1}
               accept='image/png, image/jpeg'
               fileList={formData.files}
-              //   onChange={handleFileChange}
               beforeUpload={(file) => {
                 setFormData((prev) => ({
                   ...prev,

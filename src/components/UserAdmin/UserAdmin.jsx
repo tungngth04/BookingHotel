@@ -18,7 +18,6 @@ const UserAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
   const [isLock, setIsLock] = useState(false)
-  console.log('ádasfadfa', currentUser)
   const fetchUsers = async () => {
     setLoading(true)
     try {
@@ -175,7 +174,6 @@ const UserAdmin = () => {
   const handleToggleLock = async (userId, isLock) => {
     try {
       setLoading(true)
-      console.log('lock', isLock)
       await lockUser(userId, { isLocked: isLock })
       message.success(isLock ? 'Người dùng đã bị khóa' : 'Người dùng đã được mở khóa')
       if (isLock) {
@@ -190,7 +188,6 @@ const UserAdmin = () => {
       setLoading(false)
     }
   }
-  console.log('ádadaasdasfe23423', data)
 
   const handleChange = (page, pageSize) => {
     setPagination((prev) => ({

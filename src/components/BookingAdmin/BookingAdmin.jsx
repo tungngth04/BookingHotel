@@ -1,6 +1,5 @@
-import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
+import { Input, message, Modal, Pagination, Space, Table } from 'antd'
 import './BookingAdmin.scss'
-import { PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import {
@@ -9,7 +8,6 @@ import {
   checkInBooking,
   checkOutBooking,
 } from '../../apis/booking.api'
-// import CreateBookingModal from '../createBookingModal/createBookingModal'
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
 import InvoiceBooking from '../invoiceBooking/invoiceBooking'
@@ -132,7 +130,6 @@ const BookingAdmin = () => {
       cancelText: 'Đóng',
       onOk: async () => {
         try {
-          console.log('Payload gửi đến API:', { note: tempNote })
           await cancelBooking(BookingId, { note: tempNote })
           message.success('Huỷ đặt phòng thành công')
           await fetchBookings()
@@ -189,16 +186,10 @@ const BookingAdmin = () => {
                   placeholder='Tìm kiếm thành viên'
                   allowClear
                 />
-                {/* <Button
-                  onClick={() => {
-                    setIsOpenModel(true), setIsUpdate(false)
-                  }}>
-                  <PlusCircleOutlined /> Thêm
-                </Button> */}
+
                 <InvoiceBooking
                   onCancel={handleCancel}
                   visible={isOpenModel}
-                  // onBookingCreated={fetchBookings}
                   currentBooking={currentBooking}
                 />
               </div>

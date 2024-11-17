@@ -155,7 +155,6 @@ const CreateUserModal = ({ visible, onCancel, onUserCreated, currentUser }) => {
               maxCount={1}
               accept='image/png, image/jpeg'
               fileList={formData.fileAvatar}
-              //   onChange={handleFileChange}
               beforeUpload={(file) => {
                 setFormData((prev) => ({
                   ...prev,

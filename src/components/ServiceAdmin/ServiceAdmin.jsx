@@ -19,7 +19,6 @@ const ServiceAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentService, setCurrentService] = useState(null)
-  console.log('ádasfadfa', currentService)
   const fetchServices = async () => {
     setLoading(true)
     try {

@@ -18,7 +18,6 @@ const RoomAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentRoom, setCurrentRoom] = useState(null)
-  console.log('ádasfadfa', currentRoom)
   const fetchRooms = async () => {
     setLoading(true)
     try {

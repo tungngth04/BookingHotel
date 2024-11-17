@@ -13,7 +13,6 @@ const CreateProductModal = ({ visible, onCancel, onProductCreated, isUpdate, cur
     description: '',
     serviceId: null,
   })
-  console.log('ádasdasd', formData.thumbnailFile)
   useEffect(() => {
     if (isUpdate && currentProduct) {
       setFormData({
@@ -99,7 +98,6 @@ const CreateProductModal = ({ visible, onCancel, onProductCreated, isUpdate, cur
               maxCount={1}
               accept='image/png, image/jpeg'
               fileList={formData.thumbnailFile}
-              //   onChange={handleFileChange}
               beforeUpload={(file) => {
                 setFormData((prev) => ({
                   ...prev,

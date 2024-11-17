@@ -37,7 +37,6 @@ const Login = () => {
                   const res = await login(values)
                   if (res.data?.data) {
                     const roles = res.data.data.authorities
-                    // console.log('aaa', JSON.parse(localStorage.getItem(LocalStorage.auth))?.token)
                     authen.saveUser({
                       token: res.data.data.accessToken,
                     })
