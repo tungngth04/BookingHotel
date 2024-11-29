@@ -8,6 +8,8 @@ export const ApiConstant = {
     createRoom: '/room/create',
     updateRoom: '/room/update/',
     deleteRoom: '/room/delete/',
+    restoreRoom: '/room/restore/',
+    deleteTrashRoom: '/room/delete/trash/',
   },
   users: {
     getAllUser: '/user',
@@ -29,6 +31,8 @@ export const ApiConstant = {
     deleteProduct: '/product/delete/',
     editProduct: '/product/update/',
     createProduct: '/product/create',
+    restoreProduct: '/product/restore/',
+    deleteTrashProduct: '/product/delete/trash/',
   },
   sales: {
     getAllSale: '/sale',
@@ -36,12 +40,16 @@ export const ApiConstant = {
     deleteSale: '/sale/delete/',
     createSale: '/sale/create',
     editSale: '/sale/update/',
+    deleteTrashSale: '/sale/delete/trash/',
+    restoreSale: '/sale/restore/',
   },
   services: {
     getAllService: '/service/admin',
     createService: '/service/create',
     deleteService: '/service/delete/',
     editService: '/service/update/',
+    restoreService: '/service/restore/',
+    deleteTrashService: '/service/delete/trash/',
   },
   statistic: {
     topBooking: '/statistic/top-booking',

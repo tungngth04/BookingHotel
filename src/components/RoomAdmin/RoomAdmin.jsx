@@ -1,10 +1,11 @@
-import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
+import { Button, Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
 import './RoomAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { deleteRoom, getAllRoom } from '../../apis/room.api'
+import { deleteRoom, deleteTrashRoom, getAllRoom, restoreRoom } from '../../apis/room.api'
 import CreateRoomModal from '../CreateRoomModal/CreateRoomModal'
+import { FaTrashRestoreAlt } from 'react-icons/fa'
 const RoomAdmin = () => {
   const CURRENT_DEFAULT = 1
   const PAGE_SIZE_DEFAULT = 10
@@ -18,11 +19,12 @@ const RoomAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentRoom, setCurrentRoom] = useState(null)
+  const [flag, setFlag] = useState(false)
   const fetchRooms = async () => {
     setLoading(true)
     try {
       const response = await getAllRoom({
-        deleteFlag: false,
+        deleteFlag: flag,
         pageNum: pagination.current,
         pageSize: pagination.size,
       })
@@ -94,10 +96,18 @@ const RoomAdmin = () => {
       fixed: 'right',
       render: (record) => (
         <Space size='middle'>
-          <EditOutlined
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-            onClick={() => handleUpdate(record)}
-          />
+          {flag ? (
+            <FaTrashRestoreAlt
+              style={{ fontSize: '16px', cursor: 'pointer' }}
+              onClick={() => handleRestore(record.id)}
+            />
+          ) : (
+            <EditOutlined
+              style={{ fontSize: '20px', cursor: 'pointer' }}
+              onClick={() => handleUpdate(record)}
+            />
+          )}
+
           <DeleteOutlined
             style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }}
             onClick={() => handleDelete(record.id)}
@@ -114,22 +124,39 @@ const RoomAdmin = () => {
   const handleDelete = async (roomId) => {
     Modal.confirm({
       title: 'Xác nhận xóa',
-      content: 'Bạn có chắc chắn muốn xóa phòng này?',
+      content: flag
+        ? 'Bạn có chắc chắn muốn xóa vĩnh viễn phòng này?'
+        : 'Bạn có chắc chắn muốn xóa phòng này?',
       okText: 'Xóa',
       okType: 'danger',
       cancelText: 'Hủy',
       onOk: async () => {
         try {
-          await deleteRoom(roomId)
+          if (flag) {
+            await deleteTrashRoom(roomId)
+          } else {
+            await deleteRoom(roomId)
+          }
           message.success('Xóa phòng thành công')
-          setData((prevData) => prevData.filter((_, i) => i !== roomId))
+          setData((prevData) => prevData.filter((room) => room.id !== roomId))
         } catch (error) {
-          console.error('Error deleting room:', error)
+          console.error('Lỗi xoá phòng:', error)
           message.error('Xóa phòng thất bại')
         }
       },
     })
   }
+  const handleRestore = async (roomId) => {
+    try {
+      await restoreRoom(roomId)
+      message.success('Khôi phục phòng thành công')
+      setData((prevData) => prevData.filter((room) => room.id !== roomId))
+    } catch (error) {
+      console.error('Lỗi khôi phục phòng:', error)
+      message.error('Khôi phục phòng thất bại')
+    }
+  }
+
   const handleChange = (page, pageSize) => {
     setPagination((prev) => ({
       ...prev,
@@ -140,7 +167,7 @@ const RoomAdmin = () => {
 
   useEffect(() => {
     fetchRooms()
-  }, [pagination])
+  }, [pagination, flag])
 
   const handleCancel = () => {
     setIsOpenModel(false)
@@ -178,6 +205,27 @@ const RoomAdmin = () => {
                 />
               </div>
             </div>
+            <Tabs
+              defaultActiveKey='1'
+              type='card'
+              onChange={(key) => setFlag(key == '2')}
+              items={[
+                {
+                  label: <>Room</>,
+                  key: '1',
+                  children: null,
+                },
+                {
+                  label: (
+                    <>
+                      <DeleteOutlined /> Trash
+                    </>
+                  ),
+                  key: '2',
+                  children: null,
+                },
+              ]}
+            />
             <div className='table'>
               <Table
                 className='table-content'
