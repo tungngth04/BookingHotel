@@ -7,6 +7,9 @@ const roomApi = () => ({
   createRoom: async (data) => apiDefaultUpload.post(ApiConstant.rooms.createRoom, data),
   updateRoom: async (id, data) =>
     apiDefaultUpload.put(`${ApiConstant.rooms.updateRoom}${id}`, data),
+  restoreRoom: async (id) => apiDefault.post(`${ApiConstant.rooms.restoreRoom}${id}`),
+  deleteTrashRoom: async (id) => api.delete(`${ApiConstant.rooms.deleteTrashRoom}${id}`),
 })
 
-export const { getAllRoom, deleteRoom, createRoom, updateRoom } = roomApi()
+export const { getAllRoom, deleteRoom, createRoom, updateRoom, restoreRoom, deleteTrashRoom } =
+  roomApi()

@@ -14,10 +14,14 @@ import {
 } from '@ant-design/icons'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../../apis/auth.api'
+import useAuth from '../../hooks/useAuth'
+import toast from 'react-hot-toast'
 
 const SideBarAdmin = () => {
   const [activeKey, setActiveKey] = useState('1')
   const navigate = useNavigate()
+  const currentUser = useAuth()
   const handleMenuClick = (e) => {
     setActiveKey(e.key)
     const clickedItem = findMenuItemByKey(menuItems, e.key)
@@ -75,6 +79,7 @@ const SideBarAdmin = () => {
       label: 'Đăng xuất',
       path: '/logout',
       className: 'li-menu',
+      onClick: () => hanldeLogOut(),
     },
   ]
 
@@ -90,6 +95,16 @@ const SideBarAdmin = () => {
   }
   const handleClick = () => {
     navigate('/')
+  }
+
+  const hanldeLogOut = async () => {
+    try {
+      await logout()
+      currentUser.clearUser()
+      navigate('/login')
+    } catch (error) {
+      toast.error(error.message || 'Đã xảy ra lỗi khi đăng xuất!')
+    }
   }
   return (
     <>

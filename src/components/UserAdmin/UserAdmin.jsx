@@ -1,4 +1,4 @@
-import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
+import { Button, Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
 import './UserAdmin.scss'
 import { DeleteOutlined, EditOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons'
 import { useState } from 'react'
@@ -221,12 +221,12 @@ const UserAdmin = () => {
                   placeholder='Tìm kiếm thành viên'
                   allowClear
                 />
-                <Button onClick={() => setIsLock(false)} style={{ backgroundColor: 'green' }}>
+                {/* <Button onClick={() => setIsLock(false)} style={{ backgroundColor: 'green' }}>
                   <UnlockOutlined /> Mở khoá
                 </Button>
                 <Button onClick={() => setIsLock(true)} style={{ backgroundColor: 'red' }}>
                   <LockOutlined /> Khoá
-                </Button>
+                </Button> */}
 
                 <CreateUserModal
                   onCancel={handleCancel}
@@ -236,6 +236,32 @@ const UserAdmin = () => {
                 />
               </div>
             </div>
+            <Tabs
+              defaultActiveKey='1'
+              type='card'
+              onChange={(key) => setIsLock(key === '2')}
+              items={[
+                {
+                  label: (
+                    <>
+                      <UnlockOutlined /> Mở khoá
+                    </>
+                  ),
+                  key: '1',
+                  children: null,
+                },
+                {
+                  label: (
+                    <>
+                      <LockOutlined /> Khoá
+                    </>
+                  ),
+                  key: '2',
+                  children: null,
+                },
+              ]}
+            />
+
             <div className='table'>
               <Table
                 className='table-content'

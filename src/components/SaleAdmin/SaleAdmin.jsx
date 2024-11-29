@@ -1,11 +1,11 @@
-import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
+import { Button, Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
 import './SaleAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { deleteSale, getAllSale } from '../../apis/sale.api'
+import { deleteSale, deleteTrashSale, getAllSale, restoreSale } from '../../apis/sale.api'
 import CreateSaleModal from '../createSaleModal/createSaleModal'
-
+import { FaTrashRestoreAlt } from 'react-icons/fa'
 const SaleAdmin = () => {
   const CURRENT_DEFAULT = 1
   const PAGE_SIZE_DEFAULT = 10
@@ -19,11 +19,13 @@ const SaleAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentSale, setCurrentSale] = useState(null)
+  const [flag, setFlag] = useState(false)
+
   const fetchSales = async () => {
     setLoading(true)
     try {
       const response = await getAllSale({
-        deleteFlag: false,
+        deleteFlag: flag,
         pageNum: pagination.current,
         pageSize: pagination.size,
       })
@@ -77,10 +79,18 @@ const SaleAdmin = () => {
       fixed: 'right',
       render: (record) => (
         <Space size='middle'>
-          <EditOutlined
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-            onClick={() => handleUpdate(record)}
-          />
+          {flag ? (
+            <FaTrashRestoreAlt
+              style={{ fontSize: '16px', cursor: 'pointer' }}
+              onClick={() => handleRestore(record.id)}
+            />
+          ) : (
+            <EditOutlined
+              style={{ fontSize: '20px', cursor: 'pointer' }}
+              onClick={() => handleUpdate(record)}
+            />
+          )}
+
           <DeleteOutlined
             style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }}
             onClick={() => handleDelete(record.id)}
@@ -98,21 +108,37 @@ const SaleAdmin = () => {
   const handleDelete = async (SaleId) => {
     Modal.confirm({
       title: 'Xác nhận xóa',
-      content: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+      content: flag
+        ? 'Bạn có chắc chắn muốn xóa vĩnh viễn sale này?'
+        : 'Bạn có chắc chắn muốn xóa sale này?',
       okText: 'Xóa',
       okType: 'danger',
       cancelText: 'Hủy',
       onOk: async () => {
         try {
-          await deleteSale(SaleId)
-          message.success('Xóa sản phẩm thành công')
+          if (flag) {
+            await deleteTrashSale(SaleId)
+          } else {
+            await deleteSale(SaleId)
+          }
+          message.success('Xóa sale thành công')
           setData((prevData) => prevData.filter((item) => item.id !== SaleId))
         } catch (error) {
-          console.error('Error deleting Sale:', error)
-          message.error('Xóa sản phẩm thất bại')
+          console.error('Lỗi xoá sale:', error)
+          message.error('Xóa sale thất bại')
         }
       },
     })
+  }
+  const handleRestore = async (SaleId) => {
+    try {
+      await restoreSale(SaleId)
+      message.success('Khôi phục sale thành công')
+      setData((prevData) => prevData.filter((sale) => sale.id !== SaleId))
+    } catch (error) {
+      console.error('Lỗi khôi phục sale:', error)
+      message.error('Khôi phục sale thất bại')
+    }
   }
   const handleChange = (page, pageSize) => {
     setPagination((prev) => ({
@@ -124,7 +150,7 @@ const SaleAdmin = () => {
 
   useEffect(() => {
     fetchSales()
-  }, [pagination])
+  }, [pagination, flag])
 
   const handleCancel = () => {
     setIsOpenModel(false)
@@ -162,6 +188,27 @@ const SaleAdmin = () => {
                 />
               </div>
             </div>
+            <Tabs
+              defaultActiveKey='1'
+              type='card'
+              onChange={(key) => setFlag(key == '2')}
+              items={[
+                {
+                  label: <>Sale</>,
+                  key: '1',
+                  children: null,
+                },
+                {
+                  label: (
+                    <>
+                      <DeleteOutlined /> Trash
+                    </>
+                  ),
+                  key: '2',
+                  children: null,
+                },
+              ]}
+            />
             <div className='table'>
               <Table
                 className='table-content'

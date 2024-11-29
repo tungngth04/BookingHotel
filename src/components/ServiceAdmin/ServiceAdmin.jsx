@@ -1,10 +1,16 @@
-import { Button, Input, message, Modal, Pagination, Space, Table } from 'antd'
+import { Button, Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
 import './ServiceAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { deleteService, getAllService } from '../../apis/service.api'
+import {
+  deleteService,
+  deleteTrashService,
+  getAllService,
+  restoreService,
+} from '../../apis/service.api'
 import CreateServiceModal from '../createServiceModal/createServiceModal'
+import { FaTrashRestoreAlt } from 'react-icons/fa'
 
 const ServiceAdmin = () => {
   const CURRENT_DEFAULT = 1
@@ -19,11 +25,13 @@ const ServiceAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentService, setCurrentService] = useState(null)
+  const [flag, setFlag] = useState(false)
+  console.log('flag', flag)
   const fetchServices = async () => {
     setLoading(true)
     try {
       const response = await getAllService({
-        deleteFlag: false,
+        deleteFlag: flag,
         pageNum: pagination.current,
         pageSize: pagination.size,
       })
@@ -88,10 +96,18 @@ const ServiceAdmin = () => {
       fixed: 'right',
       render: (record) => (
         <Space size='middle'>
-          <EditOutlined
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-            onClick={() => handleUpdate(record)}
-          />
+          {flag ? (
+            <FaTrashRestoreAlt
+              style={{ fontSize: '16px', cursor: 'pointer' }}
+              onClick={() => handleRestore(record.id)}
+            />
+          ) : (
+            <EditOutlined
+              style={{ fontSize: '20px', cursor: 'pointer' }}
+              onClick={() => handleUpdate(record)}
+            />
+          )}
+
           <DeleteOutlined
             style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }}
             onClick={() => handleDelete(record.id)}
@@ -108,21 +124,37 @@ const ServiceAdmin = () => {
   const handleDelete = async (ServiceId) => {
     Modal.confirm({
       title: 'Xác nhận xóa',
-      content: 'Bạn có chắc chắn muốn xóa dịch vụ này?',
+      content: flag
+        ? 'Bạn có chắc chắn muốn xóa vĩnh viễn dịch vụ này?'
+        : 'Bạn có chắc chắn muốn xóa dịch vụ này?',
       okText: 'Xóa',
       okType: 'danger',
       cancelText: 'Hủy',
       onOk: async () => {
         try {
-          await deleteService(ServiceId)
+          if (flag) {
+            await deleteTrashService(ServiceId)
+          } else {
+            await deleteService(ServiceId)
+          }
           message.success('Xóa dịch vụ thành công')
           setData((prevData) => prevData.filter((service) => service.id !== ServiceId))
         } catch (error) {
-          console.error('Error deleting Service:', error)
+          console.error('Lỗi xoá dịch vụ:', error)
           message.error('Xóa dịch vụ thất bại')
         }
       },
     })
+  }
+  const handleRestore = async (ServiceId) => {
+    try {
+      await restoreService(ServiceId)
+      message.success('Khôi phục dịch vụ thành công')
+      setData((prevData) => prevData.filter((service) => service.id !== ServiceId))
+    } catch (error) {
+      console.error('Lỗi khôi phục dịch vụ:', error)
+      message.error('Khôi phục dịch vụ thất bại')
+    }
   }
   const handleChange = (page, pageSize) => {
     setPagination((prev) => ({
@@ -134,7 +166,7 @@ const ServiceAdmin = () => {
 
   useEffect(() => {
     fetchServices()
-  }, [pagination])
+  }, [pagination, flag])
 
   const handleCancel = () => {
     setIsOpenModel(false)
@@ -172,6 +204,27 @@ const ServiceAdmin = () => {
                 />
               </div>
             </div>
+            <Tabs
+              defaultActiveKey='1'
+              type='card'
+              onChange={(key) => setFlag(key == '2')}
+              items={[
+                {
+                  label: <>Service</>,
+                  key: '1',
+                  children: null,
+                },
+                {
+                  label: (
+                    <>
+                      <DeleteOutlined /> Trash
+                    </>
+                  ),
+                  key: '2',
+                  children: null,
+                },
+              ]}
+            />
             <div className='table'>
               <Table
                 className='table-content'

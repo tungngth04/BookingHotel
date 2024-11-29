@@ -10,7 +10,6 @@ const HeaderAdmin = () => {
   const handleCurrentUser = async () => {
     try {
       const user = await getCurrentUser()
-      console.log('user', user)
       setUser(user.data.data.firstName)
     } catch (error) {
       toast.error('Không lấy được dũ liệu ngưỜi dùng')

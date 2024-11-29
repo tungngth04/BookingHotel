@@ -128,6 +128,7 @@ const BookingAdmin = () => {
       okText: 'Huỷ',
       okType: 'danger',
       cancelText: 'Đóng',
+
       onOk: async () => {
         try {
           await cancelBooking(BookingId, { note: tempNote })

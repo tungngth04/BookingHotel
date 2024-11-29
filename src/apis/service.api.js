@@ -7,6 +7,15 @@ const serviceApi = () => ({
   createService: async (data) => apiDefaultUpload.post(ApiConstant.services.createService, data),
   updateService: async (id, data) =>
     apiDefaultUpload.put(`${ApiConstant.services.editService}${id}`, data),
+  restoreService: async (id) => apiDefault.post(`${ApiConstant.services.restoreService}${id}`),
+  deleteTrashService: async (id) => api.delete(`${ApiConstant.services.deleteTrashService}${id}`),
 })
 
-export const { getAllService, deleteService, createService, updateService } = serviceApi()
+export const {
+  getAllService,
+  deleteService,
+  createService,
+  updateService,
+  restoreService,
+  deleteTrashService,
+} = serviceApi()
