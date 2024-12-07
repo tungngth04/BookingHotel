@@ -7,6 +7,7 @@ import {
   deleteService,
   deleteTrashService,
   getAllService,
+  getServiceById,
   restoreService,
 } from '../../apis/service.api'
 import CreateServiceModal from '../createServiceModal/createServiceModal'
@@ -26,17 +27,25 @@ const ServiceAdmin = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentService, setCurrentService] = useState(null)
   const [flag, setFlag] = useState(false)
-  console.log('flag', flag)
-  const fetchServices = async () => {
+  const [searchId, setSearchId] = useState('')
+
+  const fetchServices = async (serviceId = null) => {
     setLoading(true)
     try {
-      const response = await getAllService({
-        deleteFlag: flag,
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (serviceId) {
+        const response = await getServiceById(serviceId)
+        console.log('first', response)
+        setData([response.data.data])
+        setTotalItems(1)
+      } else {
+        const response = await getAllService({
+          deleteFlag: flag,
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -176,6 +185,13 @@ const ServiceAdmin = () => {
     setIsUpdate(true)
     setCurrentService(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchServices(value)
+    } else {
+      await fetchServices()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -186,8 +202,11 @@ const ServiceAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm dịch vụ'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
                 <Button
                   onClick={() => {

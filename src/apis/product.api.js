@@ -9,6 +9,7 @@ const productApi = () => ({
     apiDefaultUpload.patch(`${ApiConstant.poducts.editProduct}${id}`, data),
   restoreProduct: async (id) => apiDefault.post(`${ApiConstant.poducts.restoreProduct}${id}`),
   deleteTrashProduct: async (id) => api.delete(`${ApiConstant.poducts.deleteTrashProduct}${id}`),
+  getProductById: async (id) => apiDefault.get(`${ApiConstant.poducts.getProductById}${id}`),
 })
 
 export const {
@@ -18,4 +19,5 @@ export const {
   updateProduct,
   restoreProduct,
   deleteTrashProduct,
+  getProductById,
 } = productApi()

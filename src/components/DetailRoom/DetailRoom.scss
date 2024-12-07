@@ -1,0 +1,217 @@
+.box-detail {
+  padding: 100px 60px;
+  max-width: 1400px;
+  .room-detail {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem auto;
+    width: 100%;
+    &__content {
+      flex: 1;
+    }
+    &__img {
+      width: 100%;
+      height: auto;
+      & > img {
+        border-radius: 8px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+    &__info {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    &__header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    &__booking {
+      & > button {
+        height: 40px;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 16px 28px 15px;
+        background: #5892b5;
+        color: #ffffff;
+        border-radius: 8px;
+      }
+    }
+    &__price {
+      .amount {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #3498db;
+      }
+
+      .per-night {
+        color: #7f8c8d;
+        font-size: 0.875rem;
+      }
+    }
+    &__table {
+      padding: 1.5rem;
+      border-radius: 8px;
+
+      .room-table {
+        border-collapse: collapse;
+        td {
+          padding-bottom: 12px;
+        }
+        td:last-child {
+          padding-left: 60px;
+        }
+        .room-label {
+          color: #7f8c8d;
+        }
+        .room-value {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #34495e;
+        }
+        .value1 {
+          height: 50px;
+        }
+      }
+    }
+    &__description {
+      color: #34495e;
+      line-height: 1.6;
+    }
+    &__services {
+      color: #34495e;
+      line-height: 1.6;
+    }
+    &__medias {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      box-shadow: 0px 0px 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      .left-arrow,
+      .right-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      .left-arrow {
+        left: 10px;
+      }
+
+      .right-arrow {
+        right: 10px;
+      }
+
+      .room-medias-container {
+        display: flex;
+        gap: 1rem;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        width: 100%;
+        img {
+          height: 200px;
+          flex: 0 0 auto;
+          max-width: 100%;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          object-fit: cover;
+        }
+      }
+    }
+    &__reservation {
+      width: 400px;
+      flex-shrink: 0;
+    }
+  }
+  .reservation-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+
+    &__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+    }
+
+    .input-wrapper {
+      position: relative;
+
+      .icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7f8c8d;
+      }
+
+      input,
+      select {
+        width: 80%;
+        padding: 0.75rem 1rem 0.75rem 3rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        color: #2c3e50;
+        background: white;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: #3498db;
+        }
+      }
+    }
+
+    .check-availability-btn {
+      width: 100%;
+      padding: 1rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: #2980b9;
+      }
+    }
+  }
+}

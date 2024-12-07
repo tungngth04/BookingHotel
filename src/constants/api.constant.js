@@ -2,6 +2,8 @@ export const ApiConstant = {
   auth: {
     login: 'auth/login',
     logout: 'auth/logout',
+    signup: 'auth/signup',
+    verify: 'auth/signup/verify',
   },
   rooms: {
     getAllRoom: '/room',
@@ -10,6 +12,8 @@ export const ApiConstant = {
     deleteRoom: '/room/delete/',
     restoreRoom: '/room/restore/',
     deleteTrashRoom: '/room/delete/trash/',
+    availableRoom: '/room/available',
+    getRoomById: '/room/',
   },
   users: {
     getAllUser: '/user',
@@ -33,6 +37,7 @@ export const ApiConstant = {
     createProduct: '/product/create',
     restoreProduct: '/product/restore/',
     deleteTrashProduct: '/product/delete/trash/',
+    getProductById: '/product/',
   },
   sales: {
     getAllSale: '/sale',
@@ -50,6 +55,7 @@ export const ApiConstant = {
     editService: '/service/update/',
     restoreService: '/service/restore/',
     deleteTrashService: '/service/delete/trash/',
+    getServiceById: '/service/',
   },
   statistic: {
     topBooking: '/statistic/top-booking',

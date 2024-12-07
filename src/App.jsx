@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import './App.scss'
 import AdminLayout from './layouts/AdminLayout/AdminLayout'
 import RoomAdmin from './components/RoomAdmin/RoomAdmin'
@@ -12,12 +12,35 @@ import UserAdmin from './components/UserAdmin/UserAdmin'
 import StatisticAdmin from './components/statisticAdmin/statisticAdmin'
 import StatisticRoomBookMonth from './components/statisticRoomBookMonth/statisticRoomBookMonth'
 import StatisticBookingStatus from './components/statisticBookingStatus/statisticBookingStatus'
-// import UserLayout from './layouts/UserLayout/UserLayout'
+import UserLayout from './layouts/UserLayout/UserLayout'
+import Home from './pages/Home/Home'
+import AboutUs from './pages/AboutUs/AboutUs'
+import ListRooms from './pages/ListRooms/ListRooms'
+import DetailRoom from './components/DetailRoom/DetailRoom'
+import StatisticTopBooking from './components/statisticTopBooking/statisticTopBooking'
 function App() {
   const router = useRoutes([
     {
-      path: '/',
-      element: <Navigate to='/login' />,
+      path: '',
+      element: <UserLayout />,
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+        },
+        {
+          path: '/about-us',
+          element: <AboutUs />,
+        },
+        {
+          path: '/rooms',
+          element: <ListRooms />,
+        },
+        {
+          path: '/detail-room/:id',
+          element: <DetailRoom />,
+        },
+      ],
     },
     {
       path: '/admin',
@@ -63,34 +86,19 @@ function App() {
           path: '/admin/statistic/booking-status',
           element: <StatisticBookingStatus />,
         },
+        {
+          path: '/admin/statistic/top-booking',
+          element: <StatisticTopBooking />,
+        },
       ],
     },
 
-    // {
-    //   path: '/',
-    //   element: <UserLayout />,
-    //   // children: [
-    //   //   {
-    //   //     path: '',
-    //   //     element: <HomeAdmin />,
-    //   //   },
-    //   //   {
-    //   //     path: '/admin/rooms',
-    //   //     element: <RoomAdmin />,
-    //   //   },
-    //   // ],
-    // },
     {
       path: '/login',
       element: <Login />,
     },
   ])
-  return (
-    <>
-      {router}
-      {/* <Login /> */}
-    </>
-  )
+  return <>{router}</>
 }
 
 export default App

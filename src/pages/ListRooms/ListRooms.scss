@@ -1,0 +1,93 @@
+.rooms-header {
+  padding: 100px 100px 50px 100px;
+  text-align: center;
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+
+  &__subtitle {
+    font-size: 1.125rem;
+    color: #7f8c8d;
+  }
+}
+.box-rooms {
+  display: flex;
+  justify-content: center;
+  padding: 0 100px;
+  .list-rooms {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    .room-card {
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      .room-img {
+        width: 100%;
+        & > img {
+          width: 100%;
+          object-fit: cover;
+          border-radius: 8px 8px 0 0;
+        }
+      }
+
+      .room-info {
+        padding: 0 20px 20px 20px;
+        & > h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #2c3e50;
+          height: 55px;
+        }
+        .room-price {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #3498db;
+          margin: -8px 0 8px 0;
+        }
+        .room-table {
+          border-collapse: collapse;
+          td {
+            padding-bottom: 12px;
+          }
+          td:last-child {
+            padding-left: 60px;
+          }
+          .room-label {
+            color: #7f8c8d;
+          }
+          .room-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #34495e;
+          }
+          .value1 {
+            height: 50px;
+          }
+        }
+        .room-btn {
+          width: 100%;
+          cursor: pointer;
+          border: 1px solid #bdc3c7;
+          border-radius: 4px;
+          color: #34495e;
+          font-size: 0.875rem;
+          font-weight: 600;
+          padding: 8px;
+          margin-top: 1rem;
+          &:hover {
+            background-color: #5892b5;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+}
+.pagination-wrapper {
+  padding: 20px 100px;
+}

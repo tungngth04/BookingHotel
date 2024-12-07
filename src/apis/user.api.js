@@ -9,6 +9,8 @@ const userApi = () => ({
   lockUser: async (id, data) =>
     apiDefault.post(`${ApiConstant.users.lockById}${id}?isLocked=${data.isLocked}`),
   getCurrentUser: async () => apiDefault.get(ApiConstant.users.currentUser),
+  getUserById: async (id) => apiDefault.get(`${ApiConstant.users.getUserById}${id}`),
 })
 
-export const { getAllUser, deleteUser, updateUser, lockUser, getCurrentUser } = userApi()
+export const { getAllUser, deleteUser, updateUser, lockUser, getCurrentUser, getUserById } =
+  userApi()

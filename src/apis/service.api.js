@@ -9,6 +9,7 @@ const serviceApi = () => ({
     apiDefaultUpload.put(`${ApiConstant.services.editService}${id}`, data),
   restoreService: async (id) => apiDefault.post(`${ApiConstant.services.restoreService}${id}`),
   deleteTrashService: async (id) => api.delete(`${ApiConstant.services.deleteTrashService}${id}`),
+  getServiceById: async (id) => apiDefault.get(`${ApiConstant.services.getServiceById}${id}`),
 })
 
 export const {
@@ -18,4 +19,5 @@ export const {
   updateService,
   restoreService,
   deleteTrashService,
+  getServiceById,
 } = serviceApi()

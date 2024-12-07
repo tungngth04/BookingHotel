@@ -154,8 +154,7 @@ const StatisticAdmin = () => {
             />
           ) : (
             !isLoading && (
-              <p className='no-data'>
-                {' '}
+              <div className='no-data'>
                 <ApexCharts
                   key={JSON.stringify(chartData)}
                   options={chartData.options}
@@ -163,8 +162,7 @@ const StatisticAdmin = () => {
                   type='line'
                   height={350}
                 />
-                .
-              </p>
+              </div>
             )
           )}
         </div>

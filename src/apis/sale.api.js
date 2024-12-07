@@ -8,7 +8,15 @@ const saleApi = () => ({
   updateSale: async (id, data) => apiDefault.put(`${ApiConstant.sales.editSale}${id}`, data),
   restoreSale: async (id) => apiDefault.post(`${ApiConstant.sales.restoreSale}${id}`),
   deleteTrashSale: async (id) => api.delete(`${ApiConstant.sales.deleteTrashSale}${id}`),
+  getSaleById: async (id) => apiDefault.get(`${ApiConstant.sales.getSaleById}${id}`),
 })
 
-export const { getAllSale, deleteSale, createSale, updateSale, restoreSale, deleteTrashSale } =
-  saleApi()
+export const {
+  getAllSale,
+  deleteSale,
+  createSale,
+  updateSale,
+  restoreSale,
+  deleteTrashSale,
+  getSaleById,
+} = saleApi()
