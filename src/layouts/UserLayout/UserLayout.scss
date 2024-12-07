@@ -1,4 +1,5 @@
 .layout-content {
-  display: flex;
-  justify-content: center;
+  .layout-outlet {
+    padding-top: 110px;
+  }
 }

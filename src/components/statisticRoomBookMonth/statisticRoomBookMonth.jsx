@@ -169,15 +169,14 @@ const StatisticRoomBookMonth = () => {
             />
           ) : (
             !isLoading && (
-              <p className='no-data'>
-                {' '}
+              <div className='no-data'>
                 <ApexCharts
-                  options={chartData.options}
-                  series={chartData.series}
+                  options={{ ...chartData.options, xaxis: { categories: [] } }}
+                  series={[{ data: [] }]}
                   type='bar'
                   height={350}
                 />
-              </p>
+              </div>
             )
           )}
         </div>

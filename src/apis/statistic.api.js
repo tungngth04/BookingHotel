@@ -7,6 +7,7 @@ const statisticApi = () => ({
     apiDefault.get(ApiConstant.statistic.roomBookedMonth, { params }),
   getBookingStatus: async (params) =>
     apiDefault.get(ApiConstant.statistic.bookingStatus, { params }),
+  getTopBooking: async (params) => apiDefault.get(ApiConstant.statistic.topBooking, { params }),
 })
 
-export const { getRevenue, getRoomBookMonth, getBookingStatus } = statisticApi()
+export const { getRevenue, getRoomBookMonth, getBookingStatus, getTopBooking } = statisticApi()

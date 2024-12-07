@@ -61,9 +61,10 @@ const SideBarAdmin = () => {
       label: 'Thống kê',
       className: 'li-menu',
       children: [
-        { key: '2-1', label: 'Phòng đặt trong tháng', path: '/admin/statistic/room-book-month' },
-        { key: '2-2', label: 'Doanh thu', path: '/admin/statistic/revenue' },
-        { key: '2-3', label: 'Trạng thái đặt phòng', path: '/admin/statistic/booking-status' },
+        { key: '2-1', label: 'Phòng đặt nhiều nhất', path: '/admin/statistic/top-booking' },
+        { key: '2-2', label: 'Phòng đặt trong tháng', path: '/admin/statistic/room-book-month' },
+        { key: '2-3', label: 'Doanh thu', path: '/admin/statistic/revenue' },
+        { key: '2-4', label: 'Trạng thái đặt phòng', path: '/admin/statistic/booking-status' },
       ],
     },
     {

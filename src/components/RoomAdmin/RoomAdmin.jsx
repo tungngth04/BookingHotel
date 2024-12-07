@@ -3,7 +3,13 @@ import './RoomAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { deleteRoom, deleteTrashRoom, getAllRoom, restoreRoom } from '../../apis/room.api'
+import {
+  deleteRoom,
+  deleteTrashRoom,
+  getAllRoom,
+  restoreRoom,
+  getRoomById,
+} from '../../apis/room.api'
 import CreateRoomModal from '../CreateRoomModal/CreateRoomModal'
 import { FaTrashRestoreAlt } from 'react-icons/fa'
 const RoomAdmin = () => {
@@ -20,16 +26,24 @@ const RoomAdmin = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentRoom, setCurrentRoom] = useState(null)
   const [flag, setFlag] = useState(false)
-  const fetchRooms = async () => {
+  const [searchId, setSearchId] = useState('')
+  const fetchRooms = async (roomId = null) => {
     setLoading(true)
     try {
-      const response = await getAllRoom({
-        deleteFlag: flag,
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (roomId) {
+        const response = await getRoomById(roomId)
+        console.log('first', response)
+        setData([response.data.data]) 
+        setTotalItems(1) 
+      } else {
+        const response = await getAllRoom({
+          deleteFlag: flag,
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -177,6 +191,13 @@ const RoomAdmin = () => {
     setIsUpdate(true)
     setCurrentRoom(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchRooms(value)
+    } else {
+      await fetchRooms()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -187,8 +208,11 @@ const RoomAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm phòng'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
                 <Button
                   onClick={() => {

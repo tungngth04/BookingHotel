@@ -7,6 +7,7 @@ import {
   cancelBooking,
   checkInBooking,
   checkOutBooking,
+  getBookingById,
 } from '../../apis/booking.api'
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
@@ -23,16 +24,24 @@ const BookingAdmin = () => {
   })
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [currentBooking, setCurrentBooking] = useState(null)
+  const [searchId, setSearchId] = useState('')
 
-  const fetchBookings = async () => {
+  const fetchBookings = async (bookingID = null) => {
     setLoading(true)
     try {
-      const response = await getAllBooking({
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (bookingID) {
+        const response = await getBookingById(bookingID)
+        console.log('first', response)
+        setData([response.data.data])
+        setTotalItems(1)
+      } else {
+        const response = await getAllBooking({
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -174,6 +183,13 @@ const BookingAdmin = () => {
     setIsOpenModel(true)
     setCurrentBooking(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchBookings(value)
+    } else {
+      await fetchBookings()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -184,8 +200,11 @@ const BookingAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm phòng đặt'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
 
                 <InvoiceBooking

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, Modal } from 'antd'
 import './invoiceBooking.scss'
 import { useEffect, useState } from 'react'

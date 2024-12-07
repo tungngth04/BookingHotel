@@ -8,6 +8,7 @@ import {
   deleteProduct,
   deleteTrashProduct,
   getAllProduct,
+  getProductById,
   restoreProduct,
 } from '../../apis/product.api'
 import CreateProductModal from '../createProductModal/createProductModal'
@@ -27,17 +28,25 @@ const ProductAdmin = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentProduct, setCurrentProduct] = useState(null)
   const [flag, setFlag] = useState(false)
+  const [searchId, setSearchId] = useState('')
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (productId = null) => {
     setLoading(true)
     try {
-      const response = await getAllProduct({
-        deleteFlag: flag,
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (productId) {
+        const response = await getProductById(productId)
+        console.log('first', response)
+        setData([response.data.data])
+        setTotalItems(1)
+      } else {
+        const response = await getAllProduct({
+          deleteFlag: flag,
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -176,6 +185,13 @@ const ProductAdmin = () => {
     setIsUpdate(true)
     setCurrentProduct(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchProducts(value)
+    } else {
+      await fetchProducts()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -186,8 +202,11 @@ const ProductAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm dịch vụ'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
                 <Button
                   onClick={() => {

@@ -1,10 +1,10 @@
-import { Button, Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
+import { Input, message, Modal, Pagination, Space, Table, Tabs } from 'antd'
 import './UserAdmin.scss'
 import { DeleteOutlined, EditOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import CreateUserModal from '../createUserModal/createUserModal'
-import { deleteUser, getAllUser, lockUser } from '../../apis/user.api'
+import { deleteUser, getAllUser, getUserById, lockUser } from '../../apis/user.api'
 const UserAdmin = () => {
   const CURRENT_DEFAULT = 1
   const PAGE_SIZE_DEFAULT = 10
@@ -18,16 +18,24 @@ const UserAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
   const [isLock, setIsLock] = useState(false)
-  const fetchUsers = async () => {
+  const [searchId, setSearchId] = useState('')
+  const fetchUsers = async (userId = null) => {
     setLoading(true)
     try {
-      const response = await getAllUser({
-        isLocked: isLock,
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (userId) {
+        const response = await getUserById(userId)
+        console.log('first', response)
+        setData([response.data.data])
+        setTotalItems(1)
+      } else {
+        const response = await getAllUser({
+          isLocked: isLock,
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -208,6 +216,13 @@ const UserAdmin = () => {
     setIsOpenModel(true)
     setCurrentUser(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchUsers(value)
+    } else {
+      await fetchUsers()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -218,8 +233,11 @@ const UserAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm khách hàng'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
                 {/* <Button onClick={() => setIsLock(false)} style={{ backgroundColor: 'green' }}>
                   <UnlockOutlined /> Mở khoá

@@ -3,7 +3,13 @@ import './SaleAdmin.scss'
 import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { deleteSale, deleteTrashSale, getAllSale, restoreSale } from '../../apis/sale.api'
+import {
+  deleteSale,
+  deleteTrashSale,
+  getAllSale,
+  getSaleById,
+  restoreSale,
+} from '../../apis/sale.api'
 import CreateSaleModal from '../createSaleModal/createSaleModal'
 import { FaTrashRestoreAlt } from 'react-icons/fa'
 const SaleAdmin = () => {
@@ -20,17 +26,25 @@ const SaleAdmin = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [currentSale, setCurrentSale] = useState(null)
   const [flag, setFlag] = useState(false)
+  const [searchId, setSearchId] = useState('')
 
-  const fetchSales = async () => {
+  const fetchSales = async (saleId = null) => {
     setLoading(true)
     try {
-      const response = await getAllSale({
-        deleteFlag: flag,
-        pageNum: pagination.current,
-        pageSize: pagination.size,
-      })
-      setData(response.data.data.items)
-      setTotalItems(response.data.data.meta.totalElements)
+      if (saleId) {
+        const response = await getSaleById(saleId)
+        console.log('first', response)
+        setData([response.data.data])
+        setTotalItems(1)
+      } else {
+        const response = await getAllSale({
+          deleteFlag: flag,
+          pageNum: pagination.current,
+          pageSize: pagination.size,
+        })
+        setData(response.data.data.items)
+        setTotalItems(response.data.data.meta.totalElements)
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -160,6 +174,13 @@ const SaleAdmin = () => {
     setIsUpdate(true)
     setCurrentSale(data)
   }
+  const handleSearch = async (value) => {
+    if (value) {
+      await fetchSales(value)
+    } else {
+      await fetchSales()
+    }
+  }
   return (
     <>
       <div className='home-admin' style={{ flex: 1 }}>
@@ -170,8 +191,11 @@ const SaleAdmin = () => {
               <div className='search-bar'>
                 <Input.Search
                   className='search-input'
-                  placeholder='Tìm kiếm thành viên'
+                  placeholder='Tìm kiếm sale'
                   allowClear
+                  onChange={(e) => setSearchId(e.target.value)}
+                  onSearch={handleSearch}
+                  value={searchId}
                 />
                 <Button
                   onClick={() => {

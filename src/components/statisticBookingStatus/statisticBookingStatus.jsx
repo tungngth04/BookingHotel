@@ -13,7 +13,7 @@ const StatisticBookingStatus = () => {
     options: {
       chart: {
         type: 'donut',
-        height: 350,
+        height: 400,
       },
       responsive: [
         {
@@ -29,6 +29,22 @@ const StatisticBookingStatus = () => {
         },
       ],
       labels: ['Cancelled', 'Checked In', 'Checked Out', 'Pending'],
+      legend: {
+        position: 'bottom',
+        fontSize: '16px',
+        markers: {
+          width: 16,
+          height: 16,
+        },
+        itemMargin: {
+          horizontal: 10,
+          vertical: 5,
+        },
+        labels: {
+          colors: '#333',
+          useSeriesColors: false,
+        },
+      },
       dataLabels: {
         enabled: true,
         formatter: (val, opts) => {
@@ -146,7 +162,7 @@ const StatisticBookingStatus = () => {
             </button>
           </div>
 
-          {chartData.series.length > 0 ? (
+          {chartData.series.length > 0 && chartData.series.some((value) => value > 0) ? (
             <ApexCharts
               options={chartData.options}
               series={chartData.series}
@@ -155,7 +171,7 @@ const StatisticBookingStatus = () => {
             />
           ) : (
             !isLoading && (
-              <p className='no-data'>
+              <div className='no-data'>
                 <span>Không có dữ liệu đặt phòng cho tháng và năm đã chọn</span>
                 <ApexCharts
                   options={chartData.options}
@@ -163,7 +179,7 @@ const StatisticBookingStatus = () => {
                   type='donut'
                   height={350}
                 />
-              </p>
+              </div>
             )
           )}
         </div>
